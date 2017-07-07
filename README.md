@@ -1,4 +1,4 @@
-# ${1: Đồ Án Tốt Nghiệp Đại HỌc HTTT}
+# 1: Đồ Án Tốt Nghiệp Đại HỌc HTTT
 
 
 ## Cài Đặt
@@ -24,8 +24,12 @@
   + Ngày lên lab: sáng dậy 7h20 học ở nhà, chiều 1h30 lên lab,6h30 về tắm rửa ăn cơm. Tối học từ 8h đến 11h30
   + Tối đi ngủ từ 11h45 phút.
   + Thời gian học sẽ gồm: học tiếng anh, làm đồ án và thêm về big data
-## Bản quyền
 
+## Note Công việc hoàn thành
+- Ngày 07/07/2017 Hoàn thiện cơ bản các mục 1,2,3,4,5
+  + Riêng phần viết tài liệu chưa hoàn thành
+  + Riêng mục 5 phần ý tưởng đã chuyển hướng và đang viết tài liệu và đánh giá cho ý tưởng mới này, dự tính sẽ hoàn thiện công việc này trước ngày 09/07/2017
+## Bản quyền
 Vũ Minh Đức - Đại Học Bách Khoa Hà Nội
 Email: duc0103195@gmail.com
 Sdt: 0972 329 079
