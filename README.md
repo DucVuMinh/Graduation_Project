@@ -1,4 +1,4 @@
-# ${1: Đồ Án Tốt Nghiệp Đại HỌc HTTT}
+# Đồ Án Tốt Nghiệp Đại Học HTTT
 
 
 ## Cài Đặt
