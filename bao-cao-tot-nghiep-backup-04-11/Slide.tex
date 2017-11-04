@@ -1,0 +1,452 @@
+\documentclass[pdf]{beamer}
+\usepackage[utf8]{vietnam}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{subfig}
+\mode<presentation>{\usetheme{Madrid}}
+%\usecolortheme{whale}
+
+%% preamble
+\title{BÁO CÁO ĐỒ ÁN TỐT NGHIỆP}
+\subtitle{Thuật toán học online cho mô hình Biterm}
+\author{Nguyễn Tất Nguyên - CNTT-TT 2.2 K56}
+\begin{document}
+
+%% title frame
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}{Nội dung}
+\tableofcontents
+\end{frame}
+
+\AtBeginSection[]
+{
+\begin{frame}{Nội dung}
+\tableofcontents[currentsection]
+\end{frame}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Giới thiệu đề tài}
+
+\begin{frame}{Short-text khắp mọi nơi}
+	\begin{itemize}
+		\item Dữ liệu text trên internet được sinh ra ngày một nhiều thông qua các mạng xã hội, diễn đàn, tin nhắn trực tuyến,...
+		\item Mỗi văn bản chỉ gồm vài từ đến vài câu: Short-text
+		\item Nếu biết cách khai thác nguồn dữ liệu này có thể đem lại lợi ích không nhỏ
+			\begin{itemize}
+				\item Doanh nghiệp: Phân nhóm người dùng, phân tích quan điểm người dùng, gợi ý sản phẩm,...
+				\item Nhà nghiên cứu xã hội: Phân nhóm người; nghiên cứu hành vi của cộng đồng; phát hiện các luồng tư tưởng, quan điểm; phát hiện chủ đề đang được quan tâm,...
+				\item ...
+			\end{itemize}
+		%~ \item Đặc điểm của dữ liệu %gây khó khăn trong việc khai thác
+			%~ \begin{itemize}
+				%~ \item Khối lượng lớn
+				%~ \item Thay đổi liên tục
+				%~ \item Độ dài văn bản ngắn (short-text)
+			%~ \end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Topic Modeling}
+	\begin{itemize}
+		\item Topic Modeling thường được dùng để phân tích ngữ nghĩa ẩn của tập văn bản
+		\item Cho ta cái nhìn trực quan vào nội dung chứa đựng bên trong
+			\begin{table}[H]
+			\begin{center}
+			\begin{tabular}{|c|c|c|c|c|c|}
+			\hline
+			leader&	kill&	price&	kill&	review&	jet\\
+			world&	die&	rise&	u.n.&	music&	win\\
+			president&	police&	stock&	rebel&	art&	game\\
+			vote&	fire&	rate&	attack&	dance&	team\\
+			election&	dead&	market&	u.s.&	opera&	giant\\
+			party&	man&	fall&	syrium&	city&	time\\
+			% minister&	2&	dollar&	iraq&	work&	knick\\
+			%~ protest&	shoot&	trade&	israeli&	jazz&	sport\\
+			%~ russium&	crash&	u.s.&	israel&	ballet&	cup\\
+			%~ europe&	car&	gain&	war&	festival&	coach\\
+			\hline
+			\end{tabular}
+			\caption{Top từ của một số chủ đề trong tập NewYorkTimes Titles}
+			\label{tab:top10}
+			\end{center}
+			\end{table}
+		\item Cho phép biểu diễn văn bản trong không gian mới: Không gian chủ đề
+			\begin{itemize}
+				\item Có số chiều nhỏ hơn rất nhiều (50 so với 80000)
+				\item Thể hiện ưu điểm trong nhiều bài toán: Phân loại, phân cụm, tìm kiếm,...
+			\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Những khó khăn khi áp dụng}
+	\begin{itemize}
+		\item Khối lượng dữ liệu lớn
+			\begin{itemize}
+				\item Chi phí lưu trữ và tính toán rất lớn
+				\item Nếu không biết cách xử lý tốt, việc lưu trữ và tính toán thậm chí là không thể
+			\end{itemize}
+		\item Dữ liệu cập nhật liên tục
+			\begin{itemize}
+				\item Mô hình cần phải cập nhật liên tục
+			\end{itemize}
+		\item Độ dài văn bản ngắn
+			\begin{itemize}
+				\item Biểu diễn của văn bản quá thưa
+				\item Không đủ cung cấp các thông tin thống kê
+			\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Các phương pháp hiện tại ?}
+	\begin{itemize}
+		\item Latent Dirichlet Allocation (LDA)
+			\begin{itemize}
+				\item Đã được thích ứng để làm việc với lượng dữ liệu lớn, thay đổi liên tục
+				\item KHÔNG làm việc tốt với short-text
+			\end{itemize}
+		\item Biterm Topic Model (BTM)
+			\begin{itemize}
+				\item Làm việc tốt với short-text 
+				\item Phương pháp học dựa trên Gibbs sampling làm mô hình không thể hoạt động với dữ liệu lớn
+			\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Phương pháp học khác cho BTM}
+	\begin{itemize}
+		\item Nhóm tác giả của BTM đã đề xuất hai phương pháp học mới cho BTM
+			\begin{itemize}
+				\item oBTM: Chia dữ liệu thành các phần nhỏ theo nhãn thời gian. Thực hiện Gibb sampling trên từng phần nhỏ
+				\item iBTM: Sử dụng Incremental Gibbs sampling
+			\end{itemize}
+		\item Cả hai phương pháp đều có thể áp dụng cho lượng dữ liệu lớn, thay đổi liên tục
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Phương pháp học mới dựa trên Online EM}
+	\begin{itemize}
+		\item Đồ án đề xuất phương pháp học mới dựa trên online EM (online Expectation-Maximization)
+		\item Tốc độ học cao hơn nhiều lần iBTM trên các tập dữ liệu lớn
+		\item Đơn giản, dễ cài đặt 
+		\item Dễ song song hóa
+		\item Cho phép BTM có thể làm việc với dòng dữ liệu rất lớn đến liên tục
+	\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+\section{Mô hình Biterm}
+
+\begin{frame}{Mô hình Biterm}
+	\begin{figure}[H]
+		\centering
+		\subfloat[BTM \label{fig:BTM}]{\includegraphics[width=0.4\textwidth]{BTM.png}}
+		\subfloat[LDA \label{fig:LDA}]{\includegraphics[width=0.4\textwidth]{LDA.png}}
+		\caption{Biểu diễn đồ thị xác suất của mô hình BTM và LDA}
+		\label{fig:BTM+LDA}
+	\end{figure}
+\end{frame}
+
+%~ \begin{frame}{BTM và LDA dưới góc nhìn phân tích ma trận}
+	%~ \centering
+	%~ \includegraphics[width=0.7\textwidth]{BTM-LDA.png}
+	%~ \begin{itemize}
+		%~ \item LDA khai thác thông tin trong ma trận $D \times W$
+		%~ \item BTM khai thác thông tin trong ma trận đồng xuất hiện $W \times W$
+	%~ \end{itemize}
+%~ \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Thuật toán EM cho mô hình Biterm}
+
+\begin{frame}{Thuật toán dạng batch và online}
+	\begin{itemize}
+		\item Thuật toán dạng batch
+			\begin{itemize}
+				\item Lưu trữ toàn bộ dữ liệu
+				\item Mỗi vòng lặp đều phải duyệt quan toàn bộ dữ liệu\\
+				=> Chỉ có thể làm việc với lượng dữ liệu nhỏ
+			\end{itemize}
+		\item Thuật toán dạng online
+			\begin{itemize}
+				\item Chỉ xử lý một phần nhỏ dữ liệu tại mỗi bước
+				\item Đảm bảo sẽ hội tụ đến kết quả mong muốn khi số lần lặp tiến đến vô cùng
+				\item Với một tập dữ liệu lớn, có thể ta chỉ cần duyệt qua tập dữ liệu đó một lần duy nhất cũng có thể thu được một kết quả tốt
+				\item Tiết kiệm thời gian và chi phí tính toán hơn rất nhiều so với thuật toán dạng batch
+			\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Maximum A Posteriori}
+	\begin{columns}
+		\column{0.5\textwidth}
+			\includegraphics[width=\textwidth]{BTM.png}
+		\column{0.5\textwidth}
+			\begin{itemize}
+				\item $\alpha, \beta$ là hyperparameter. Ta xác định giá trị của nó bằng cross-validation
+				\item $Z$ là biến ẩn, chúng ta không quan sát được
+				\item Tập các biterm $B$ là dữ liệu duy nhất chúng ta quan sát được
+				\item $\Phi, \Theta$ là biến chúng ta cần tìm
+			\end{itemize}
+	\end{columns}
+	Sử dụng ước lượng MAP: 
+	\begin{align}
+		\Phi, \Theta =& \text{argmax\ } \log P(\Phi, \Theta | \alpha, \beta, B)\\
+					 =& \text{argmax\ } \log P(B | \Phi, \Theta) P(\Phi, \Theta | \alpha, \beta)
+	\end{align}
+\end{frame}
+
+\subsection{EM dạng batch cho mô hình Biterm}
+
+\begin{frame}{Tư tưởng của Expectation - Maximization}
+	\begin{itemize}
+		\item Ước lượng MAP trong trường hợp này không có công thức cụ thể
+		=> Ta sẽ sử dụng thuật toán lặp EM để tìm ước lượng MAP
+		\item Tư tưởng của thuật toán EM:
+			\begin{itemize}
+				\item Thay vì tối ưu hóa trực tiếp hàm mục tiêu, ta xây dựng một lower-bound cho hàm mục tiêu và tối ưu hóa trên lower-bound này
+				\item Dĩ nhiên điều này không đảm bảo tìm được ngay giá trị tối ưu
+				\item Tuy nhiên nếu lower-bound đủ chặt, giá trị tham số mới tìm được sẽ đảm bảo tốt hơn giá trị cũ 
+				\item Nếu ta lặp hai bước tạo lower-bound và tối ưu trên lower-bound này, ta sẽ tìm được một tối ưu cục bộ
+			\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{EM cho mô hình Biterm}
+	\begin{itemize}
+		\item Bước E: Tính các giá trị
+			\begin{align}
+				t_{n,k} = P(z_{n} = k |b_{n},\theta,\Phi) = \frac{\phi_{k,w_{n,1}} \phi_{k,w_{n,2}} \theta_k}{\sum_k \phi_{k,w_{n,1}} \phi_{k,w_{n,2}} \theta_k}
+			\end{align}
+			
+		\item Bước M: Tìm giá trị cực đại của lower-bound
+	\end{itemize}
+	% Sai cấu trúc, làm thế này để công thức gọn trong một dòng mà thôi
+			\begin{equation}
+				\sum_{n=1}^{N_{B}} \sum_{k=1}^{K} t_{n,k}P(w_{n,1},w_{n,2},z_{n}=k|\theta,\Phi) + \log P(\theta|\alpha) + \sum_{k} \log P(\phi_{k}|\beta) + \text{const} \label{eq:mBTM}
+			\end{equation}
+
+			theo $\Theta, \Phi$, đồng thời đảm bảo ràng buộc
+
+			\begin{align}
+				&\sum_k \theta_k = 1\\
+				&\sum_w \phi_{k,w} = 1\ \forall k
+			\end{align}
+			
+	
+\end{frame}
+
+%~ \begin{frame}{Thuật toán EM dạng batch cho Biterm}
+		%~ \begin{enumerate}
+			%~ \item Khởi tạo $\theta$ và $\Phi$ ngẫu nhiên
+			%~ \item Bước E: Với mỗi biterm $b_{n}$ và topic $k$ tính các giá trị
+			%~ \begin{equation}
+				%~ t_{n, k} = \frac{\phi_{k,w_{n,1}} \phi_{k,w_{n,2}} \theta_k}
+					%~ {\sum_k \phi_{k,w_{n,1}} \phi_{k,w_{n,2}} \theta_k}
+			%~ \end{equation}
+			%~ \item Bước M: Với mỗi topic $k$ và từ vựng $w$, cập nhật các giá trị 
+			%~ \begin{align}
+				%~ \theta_k &= \frac{\sum_n t_{n,k} + \alpha}{\sum_{k'} \big( \sum_n t_{n,k'} + \alpha \big)} \label{eq:theta}\\
+				%~ \phi_{k,w} &= \frac{\sum_{n} t_{n,k} \ c(b_{n},w) + \beta}{W \beta + \sum_{n} 2t_{n,k}} \label{eq:phi}
+			%~ \end{align}
+			%~ \item Nếu chưa hội tụ, quay lại bước 2
+		%~ \end{enumerate}
+%~ \end{frame}
+
+\subsection{EM dạng online cho mô hình Biterm}
+
+\begin{frame}{Vấn đề của EM dạng batch}
+	\begin{itemize}
+		\item 	Biểu thức cần tối ưu ở bước M
+			\begin{align}
+				\sum_{n=1}^{N_{B}} \sum_{k=1}^{K} & t_{n,k}P(w_{n,1},w_{n,2},z_{n}=k|\theta,\Phi) + \log P(\theta|\alpha) + \sum_{k} \log P(\phi_{k}|\beta) \label{eq:mBTM}
+			\end{align}
+		\item Ta thấy để xác định được biểu thức cần tối ưu trong bước M ở trên, ta cần duyệt qua toàn bộ tập dữ liệu \\
+		=> Quá tốn kém với tập dữ liệu lớn
+		\item 	Giải pháp:
+			\begin{itemize}
+				\item Thay thế phép tính tổng theo $n$ bằng xấp xỉ ngẫu nhiên
+				%~ \item Bước M giữ nguyên
+			\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{EM dạng online}
+	\begin{itemize}
+		\item Gọi $\mathcal{R}_{n-1}$ là biểu thức xấp xỉ thu được ở bước $n-1$ (sau khi quan sát biterm n-1)
+		\item Sử dụng $\mathcal{R}_{n-1}$, ta ước lượng được giá trị mới của $\Theta, \Phi$
+		\item Khi quan sát biterm thứ $n$, ta tính biểu thức $\mathcal{R}_{n}$ theo công thức
+			\begin{equation}
+				\mathcal{R}_{n} = (1 - \gamma_{n}) \mathcal{R}_{n-1} + \gamma_{n} \sum_k t_{n,k} P(w_{n,1}, w_{n,2}, z_{n}=k | \Theta, \Phi)
+			\end{equation}
+		\item $\mathcal{R}_{n}$ lại được sử dụng để ước lượng giá trị $\Theta, \Phi$ mới
+	\end{itemize}
+\end{frame}
+
+%~ \begin{frame}{Chọn $\gamma$}
+	%~ \begin{itemize}
+		%~ \item Điều kiện của $\gamma$
+			%~ \begin{align}
+				%~ \sum_{i=0}^{\infty} \gamma_i \rightarrow \infty \\
+				%~ \sum_{i=0}^{\infty} \gamma_i^{2} < \infty 
+			%~ \end{align}
+		%~ \item Trong cài đặt thực tế nếu ta chọn 
+			%~ \begin{equation}
+				%~ \gamma_i = (i+2)^{-p}	
+				%~ \label{eq:stepSize}
+			%~ \end{equation}
+			%~ thì mọi giá trị $0 < p \leq 1$ đều hợp lệ. Giá trị $p$ càng nhỏ thì bước cập nhật càng lớn, tốc độ hội tụ có thể sẽ nhanh hơn nhưng cũng kém ổn định hơn. 
+	%~ \end{itemize}
+%~ \end{frame}
+
+\begin{frame}{Mini-batch}
+	\begin{itemize}
+		\item Thông thường, để tăng tính ổn định, ta xét nhiều biterm cùng lúc thay vì chỉ một biterm
+		\item Thuật toán dạng này được gọi là mini-batch
+		\item Mini-batch thường được ưa dùng hơn so với online hoàn toàn
+		\item Trong đồ án này thuật toán mini-batch cũng được sử dụng thay cho online hoàn toàn
+	\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Thử nghiệm - Đánh giá}
+\begin{frame}{Các tập dữ liệu dùng trong thử nghiệm}
+	\begin{itemize}
+		\item NewYork Times Titles (NYTT)
+			\begin{itemize}
+				\item Tiêu đề các bài báo trên tờ NewYork Times
+				\item Tổng số văn bản: 1684127
+				\item Kích cỡ từ điển: 55488
+				\item Độ dài văn bản trung bình: 5.15
+			\end{itemize}
+		\item Tweeter
+			\begin{itemize}
+				\item Các tweet trên mạng xã hội Tweeter
+				\item Tổng số văn bản: 1485068
+				\item Kích cỡ từ điển: 89474
+				\item Độ dài văn bản trung bình: 10.1435
+			\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Các tiêu chí đánh giá}
+	\begin{itemize}
+		\item Thời gian chạy
+		\item Chất lượng chủ đề: Sử dụng độ đo NPMI
+		\item Khả năng tổng quát của mô hình: Trung bình log xác suất sinh ra một biterm trong tập test
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Các thuật toán đem ra thử nghiệm}
+	\begin{itemize}
+		\item Để gắn gọn, ta gọi phương pháp học được đề xuất là OEMBT
+		\item Trong hai thuật toán học online oBTM và iBTM
+			\begin{itemize}
+				\item oBTM: Đòi hỏi dữ liệu phải có nhãn thời gian => Không thể sử dụng cho 2 tập NYTT và Tweeter
+				\item iBTM: Có thể sử dụng cho 2 tập NYTT và Tweeter
+			\end{itemize}
+		\item Thử nghiệm sẽ so sánh: OEMBT và iBTM
+	\end{itemize}
+\end{frame}
+
+%~ \begin{frame}{Hyperparameter được sử dụng}
+	%~ \begin{itemize}
+		%~ \item Tập NYTT
+			%~ \begin{itemize}
+				%~ \item OEMBT
+					%~ \begin{itemize}
+						%~ \item $\alpha$: 2 / K
+						%~ \item $\beta$: 1e-10
+						%~ \item mini-batch size: 10000
+						%~ \item $p$ (tham số xác định step-size): 0.7
+					%~ \end{itemize}
+				%~ \item iBTM
+					%~ \begin{itemize}
+						%~ \item $\alpha$: 50 / K
+						%~ \item $\beta$: 0.005
+						%~ \item $rej$ (rejuvenation sequence length): 25
+					%~ \end{itemize}				
+			%~ \end{itemize}
+		%~ \item Tập Tweeter
+			%~ \begin{itemize}
+				%~ \item OEMBT
+					%~ \begin{itemize}
+						%~ \item $\alpha$: 2 / K
+						%~ \item $\beta$: 1e-10
+						%~ \item mini-batch size: 20000
+						%~ \item $p$: 0.7
+					%~ \end{itemize}
+				%~ \item iBTM
+					%~ \begin{itemize}
+						%~ \item $\alpha$: 50 / K
+						%~ \item $\beta$: 0.005
+						%~ \item $rej$: 25
+					%~ \end{itemize}				
+			%~ \end{itemize}
+	%~ \end{itemize}
+%~ \end{frame}
+
+%%%%%%%%%%%%
+\subsection{Đánh giá về thời gian chạy}
+
+\begin{frame}{Thời gian chạy}
+	\begin{figure}
+		\subfloat[Tập NYTT]{\includegraphics[width=0.5\textwidth]{NYTT-Time.png}}
+		\subfloat[Tập Tweeter]{\includegraphics[width=0.5\textwidth]{T-Time.png}}
+	\end{figure}
+	
+	\begin{itemize}
+		\item OEMBT nhanh hơn iBTM từ 3 đến 4 lần trên tập NYTT, từ 4 đến 5 lần trên tập tweeter
+	\end{itemize}	
+\end{frame}
+
+%%%%%%%%%%%%
+\subsection{Đánh giá về chất lượng chủ đề}
+\begin{frame}{NPMI}
+	\begin{figure}
+		\subfloat[Tập NYTT]{\includegraphics[width=0.5\textwidth]{NYTT-NPMI.png}}
+		\subfloat[Tập Tweeter]{\includegraphics[width=0.5\textwidth]{T-NPMI.png}}
+	\end{figure}
+	
+	\begin{itemize}
+		\item OEMBT cho giá trị NPMI vượt trội so với iBTM
+		\item NPMI của iBTM có xu hướng giảm khi số lượng chủ đề tăng
+	\end{itemize}	
+\end{frame}
+
+%%%%%%%%%%%%%%
+\subsection{Đánh giá về khả năng tổng quát hóa}
+\begin{frame}{Log xác suất sinh biterm}
+	\begin{figure}
+		\subfloat[Tập NYTT]{\includegraphics[width=0.5\textwidth]{NYTT-LPBP.png}}
+		\subfloat[Tập Tweeter]{\includegraphics[width=0.5\textwidth]{T-LPBP.png}}
+	\end{figure}
+	
+	\begin{itemize}
+		\item OEMBT cho kết quả tốt hơn iBTM trong mọi trường hợp
+	\end{itemize}	
+\end{frame}
+
+\begin{frame}{So sánh OEMBT và iBTM}
+	\begin{itemize}
+		\item OEMBT có tốc độ vượt trội so với iBTM
+		\item Ta có thể tăng chất lượng mô hình học được của iBTM bằng cách tăng số lần lấy mẫu. Đánh đổi lại, thời gian chạy có thể tăng nên rất nhiều
+		\item iBTM có thể linh động trong việc lựa chọn giữa thời gian chạy và chất lượng mô hình
+		\item OEMBT không có được sự mềm dẻo như iBTM. Tất cả những gì ta có thể làm là chọn các hyperparameter tốt nhất ngay từ đầu
+	\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Kết luận}
+	\begin{frame}{Kết luận}
+		\begin{itemize}
+			\item Phương pháp học OEMBT được đề xuất có tốc độ học rất cao, phù hợp để xử lý các tập dữ liệu lớn
+			\item Việc dùng mô hình học online giúp OEMBT có thể thích ứng mô hình theo sự biến đổi của dòng dữ liệu. Phù hợp để xử lý các nguồn dữ liệu biến động liên tục
+			% \item Việc chọn hyperparameter cho OEMBT cần phải tiến hành cẩn thận
+		\end{itemize}
+	\end{frame}
+\end{document}

@@ -1,0 +1,90 @@
+\begin{thebibliography}{10}
+
+\bibitem{blei2003latent}
+David~M Blei, Andrew~Y Ng, and Michael~I Jordan.
+\newblock Latent dirichlet allocation.
+\newblock {\em the Journal of machine Learning research}, 3:993--1022, 2003.
+
+\bibitem{canini2009online}
+Kevin~R Canini, Lei Shi, and Thomas~L Griffiths.
+\newblock Online inference of topics with latent dirichlet allocation.
+\newblock In {\em International conference on artificial intelligence and
+  statistics}, pages 65--72, 2009.
+
+\bibitem{cappe2009line}
+Olivier Capp{\'e} and Eric Moulines.
+\newblock On-line expectation--maximization algorithm for latent data models.
+\newblock {\em Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology)}, 71(3):593--613, 2009.
+
+\bibitem{cheng2014btm}
+Xueqi Cheng, Xiaohui Yan, Yanyan Lan, and Jiafeng Guo.
+\newblock Btm: Topic modeling over short texts.
+\newblock {\em Knowledge and Data Engineering, IEEE Transactions on},
+  26(12):2928--2941, 2014.
+
+\bibitem{dempster1977maximum}
+Arthur~P Dempster, Nan~M Laird, and Donald~B Rubin.
+\newblock Maximum likelihood from incomplete data via the em algorithm.
+\newblock {\em Journal of the royal statistical society. Series B
+  (methodological)}, pages 1--38, 1977.
+
+\bibitem{hofmann1999probabilistic}
+Thomas Hofmann.
+\newblock Probabilistic latent semantic indexing.
+\newblock In {\em Proceedings of the 22nd annual international ACM SIGIR
+  conference on Research and development in information retrieval}, pages
+  50--57. ACM, 1999.
+
+\bibitem{hong2010empirical}
+Liangjie Hong and Brian~D Davison.
+\newblock Empirical study of topic modeling in twitter.
+\newblock In {\em Proceedings of the first workshop on social media analytics},
+  pages 80--88. ACM, 2010.
+
+\bibitem{landauer1998introduction}
+Thomas~K Landauer, Peter~W Foltz, and Darrell Laham.
+\newblock An introduction to latent semantic analysis.
+\newblock {\em Discourse processes}, 25(2-3):259--284, 1998.
+
+\bibitem{lau2014machine}
+Jey~Han Lau, David Newman, and Timothy Baldwin.
+\newblock Machine reading tea leaves: Automatically evaluating topic coherence
+  and topic model quality.
+\newblock In {\em EACL}, pages 530--539, 2014.
+
+\bibitem{liang2009online}
+Percy Liang and Dan Klein.
+\newblock Online em for unsupervised models.
+\newblock In {\em Proceedings of human language technologies: The 2009 annual
+  conference of the North American chapter of the association for computational
+  linguistics}, pages 611--619. Association for Computational Linguistics,
+  2009.
+
+\bibitem{neal1993probabilistic}
+Radford~M Neal.
+\newblock Probabilistic inference using markov chain monte carlo methods.
+\newblock 1993.
+
+\bibitem{phan2008learning}
+Xuan-Hieu Phan, Le-Minh Nguyen, and Susumu Horiguchi.
+\newblock Learning to classify short and sparse text \& web with hidden topics
+  from large-scale data collections.
+\newblock In {\em Proceedings of the 17th international conference on World
+  Wide Web}, pages 91--100. ACM, 2008.
+
+\bibitem{yan2013biterm}
+Xiaohui Yan, Jiafeng Guo, Yanyan Lan, and Xueqi Cheng.
+\newblock A biterm topic model for short texts.
+\newblock In {\em Proceedings of the 22nd international conference on World
+  Wide Web}, pages 1445--1456. International World Wide Web Conferences
+  Steering Committee, 2013.
+
+\bibitem{yan2013}
+Xiaohui Yan, Jiafeng Guo, Shenghua Liu, Xueqi Cheng, and Yanfeng Wang.
+\newblock Learning topics in short texts by non-negative matrix factorization
+  on term correlation matrix.
+\newblock In {\em Proceedings of the SIAM International Conference on Data
+  Mining}. SIAM, 2013.
+
+\end{thebibliography}
